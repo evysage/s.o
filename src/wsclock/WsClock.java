@@ -19,6 +19,7 @@ public class WsClock {
         p.setVisible(true);
         
         System.out.println("holis");
+     
         
     }
     
