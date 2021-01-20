@@ -20,7 +20,7 @@ public class WsClock {
         
         System.out.println("holis");
         
-        System.out.println("Holis soy el Johan");
+        System.out.println("Holis soy el Johanñdlaskjdñlaksdl");
      
         
     }
