@@ -19,6 +19,8 @@ public class WsClock {
         p.setVisible(true);
         
         System.out.println("holis");
+        
+        System.out.println("Holis soy el Johan");
      
         
     }
