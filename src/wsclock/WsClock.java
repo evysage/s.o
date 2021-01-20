@@ -24,6 +24,7 @@ public class WsClock {
      
         System.out.println("adfkjfd");
         System.out.println("ah:((((");
+        System.out.println("kjhgfd");
     }
     
 }
