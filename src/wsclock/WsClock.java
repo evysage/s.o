@@ -18,6 +18,8 @@ public class WsClock {
         Principal p= new Principal();
         p.setVisible(true);
         
+        System.out.println("holis");
+        
     }
     
 }
