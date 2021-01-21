@@ -6,6 +6,8 @@
 package wsclock;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -20,12 +22,14 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         for (int i = 1; i < 33; i++) {
             cb_tmemoria1.addItem(i+"");
-            cb_tmemoria2.addItem(i+""); 
+            //cb_tmemoria2.addItem(i+""); 
             double pot=Math.pow(2,i);
-            cb_pagina.addItem(pot+"");
+            int num =(int)pot;
+            cb_pagina.addItem(num+"");
             cb_procesos.addItem(i+"");
             
         }
+        table.setVisible(false);
         
         
         //Soy kevin colaborando con Evelin
@@ -46,29 +50,35 @@ public class Principal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         cb_pagina = new javax.swing.JComboBox<>();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
         cb_procesos = new javax.swing.JComboBox<>();
-        cb_tmemoria2 = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txt_info = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cb_tmemoria1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0" }));
         cb_tmemoria1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_tmemoria1ActionPerformed(evt);
             }
         });
+        getContentPane().add(cb_tmemoria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 100, 30));
 
         jLabel3.setBackground(new java.awt.Color(204, 109, 204));
         jLabel3.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Algoritmo de reemplazo de paginas WSClock");
         jLabel3.setOpaque(true);
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
 
         jLabel4.setText("memoria 1");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 10));
 
         jButton1.setText("Ejecutar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -76,92 +86,41 @@ public class Principal extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, -1, -1));
 
         jLabel8.setText("Tamaño de la página");
-
-        jLabel7.setText("memoria 2");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, -1, 20));
 
         jLabel9.setText("Memoria fisica");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, -1, -1));
+
+        getContentPane().add(cb_pagina, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
 
         jLabel10.setText("Número de procesos ");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
 
-        cb_tmemoria2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_tmemoria2ActionPerformed(evt);
+        getContentPane().add(cb_procesos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
             }
-        });
+        ));
+        jScrollPane1.setViewportView(table);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(110, 110, 110)
-                                .addComponent(cb_pagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(jLabel9))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(cb_tmemoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(cb_tmemoria2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel10)
-                        .addGap(9, 9, 9)
-                        .addComponent(cb_procesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jButton1)))
-                .addContainerGap(90, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_tmemoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_tmemoria2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_pagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(cb_procesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addComponent(jButton1)
-                .addContainerGap(142, Short.MAX_VALUE))
-        );
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(305, 80, 757, -1));
+
+        txt_info.setColumns(20);
+        txt_info.setRows(5);
+        jScrollPane2.setViewportView(txt_info);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 240, 230));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -170,24 +129,40 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_tmemoria1ActionPerformed
 
-    private void cb_tmemoria2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_tmemoria2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cb_tmemoria2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        int ban=0;
         int t=Integer.parseInt( cb_procesos.getSelectedItem().toString());
         
         int procesos[]= new int [t];
         System.out.println(t);
         
         try{
-            for (int i = 0; i <t; i++) {
+            for ( int i = 0; i <t; i++) {
                 procesos[i]=Integer.parseInt(JOptionPane.showInputDialog("Ingresa el tamaño del proceso: "+i));
+                
             }
         }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Solo números enteros");
+            ban=1;
+            
+       }
+        int marcos=0;
+        if(ban==0){
+           
+       
+           marcos=(Integer.parseInt(cb_tmemoria1.getSelectedItem().toString())/
+                   Integer.parseInt(cb_pagina.getSelectedItem().toString()));
+            System.out.println("marcos "+marcos);
+        }
+        for (int i = 1; i <=marcos; i++) {
+            TableColumn tc=  new TableColumn();
+            JTableHeader header = table.getTableHeader();
+            
+            table.addColumn(tc);
             
         }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -229,14 +204,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_pagina;
     private javax.swing.JComboBox<String> cb_procesos;
     private javax.swing.JComboBox<String> cb_tmemoria1;
-    private javax.swing.JComboBox<String> cb_tmemoria2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable table;
+    private javax.swing.JTextArea txt_info;
     // End of variables declaration//GEN-END:variables
 }
