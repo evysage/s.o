@@ -6,6 +6,7 @@
 package wsclock;
 
 import com.sun.javafx.geom.AreaOp;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -21,17 +22,19 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
     /**
      * Creates new form VtnPrincipal
      */
-    int pagina=0;
-
     public VtnTamanioProcesos() {
+     
         initComponents();
+        for (int i = 0; i < Main.numProcesos; i++) {
+            PnlProceso pL = new PnlProceso();
+            pL.setTamP(this);
+            pL.setLabelProceso("Proceso "+i);
+            panelC.add(pL);
+            panelC.updateUI();
+        }
+
         this.setLocationRelativeTo(null);
 
-        Hashtable< Integer, JLabel> table = new Hashtable< Integer, JLabel>();
-        for (int i = 0; i <= 15; i++) {
-            table.put(i, new JLabel(String.valueOf(((int) Math.pow(2, i)))));
-        }
-        
     }
 
     /**
@@ -51,6 +54,8 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         boton2 = new Boton.Boton();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelC = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,7 +95,7 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 11, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
         boton1.setText("Regresar");
         boton1.addActionListener(new java.awt.event.ActionListener() {
@@ -113,8 +118,15 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 159, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Seleccione el tamaño de la cada proceso");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 560, 34));
+        jLabel8.setText("Ingrese el tamaño de la cada proceso");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 420, 34));
+
+        panelC.setBackground(new java.awt.Color(255, 255, 255));
+        panelC.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        panelC.setLayout(new java.awt.GridLayout(0, 1, 2, 2));
+        jScrollPane1.setViewportView(panelC);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 490, 340));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,8 +145,19 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton2ActionPerformed
-        Main.tamanioProcesos=new int[Main.numProcesos];
         
+        ArrayList<PnlProceso> p = new ArrayList<>();
+
+        if (panelC.getComponentCount() != 0) {
+            for (int j = 0; j < panelC.getComponentCount(); j++) {
+                p.add((PnlProceso) panelC.getComponent(j));
+            }
+        }
+        Main.tamanioProcesos = new int[Main.numProcesos];
+
+        for (int j = 0; j < p.size(); j++) {
+            Main.tamanioProcesos[j] = Integer.parseInt(p.get(j).getTxtCarcacter().getText());
+        }
         new VtnTablaPaginas().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_boton2ActionPerformed
@@ -251,5 +274,7 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelC;
     // End of variables declaration//GEN-END:variables
 }
