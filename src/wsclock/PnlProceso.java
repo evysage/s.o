@@ -15,6 +15,7 @@ import recursos.Validaciones;
  */
 public class PnlProceso extends javax.swing.JPanel {
 
+    VtnTamanioProcesos tamP;
     /**
      * Creates new form PnlPalabra
      */
@@ -22,12 +23,20 @@ public class PnlProceso extends javax.swing.JPanel {
         initComponents();
     }
 
-    public JLabel getLabelProceso() {
-        return labelProceso;
+    public VtnTamanioProcesos getTamP() {
+        return tamP;
     }
 
-    public void setLabelProceso(JLabel labelProceso) {
-        this.labelProceso = labelProceso;
+    public void setTamP(VtnTamanioProcesos tamP) {
+        this.tamP = tamP;
+    }
+
+    public String getLabelProceso() {
+        return labelProceso.getText();
+    }
+
+    public void setLabelProceso(String s) {
+        labelProceso.setText(s);
     }
 
     public JTextField getTxtCarcacter() {

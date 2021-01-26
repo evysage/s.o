@@ -6,11 +6,13 @@
 package wsclock;
 
 import com.sun.javafx.geom.AreaOp;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import recursos.Mensaje;
 
 /**
  *
@@ -21,17 +23,19 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
     /**
      * Creates new form VtnPrincipal
      */
-    int pagina=0;
-
     public VtnTamanioProcesos() {
+
         initComponents();
+        for (int i = 0; i < Main.numProcesos; i++) {
+            PnlProceso pL = new PnlProceso();
+            pL.setTamP(this);
+            pL.setLabelProceso("Proceso " + i);
+            panelC.add(pL);
+            panelC.updateUI();
+        }
+
         this.setLocationRelativeTo(null);
 
-        Hashtable< Integer, JLabel> table = new Hashtable< Integer, JLabel>();
-        for (int i = 0; i <= 15; i++) {
-            table.put(i, new JLabel(String.valueOf(((int) Math.pow(2, i)))));
-        }
-        
     }
 
     /**
@@ -51,6 +55,8 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         boton2 = new Boton.Boton();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelC = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,7 +96,7 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 11, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
         boton1.setText("Regresar");
         boton1.addActionListener(new java.awt.event.ActionListener() {
@@ -113,8 +119,15 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 159, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Seleccione el tamaño de la cada proceso");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 560, 34));
+        jLabel8.setText("Ingrese el tamaño de la cada proceso");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 420, 34));
+
+        panelC.setBackground(new java.awt.Color(255, 255, 255));
+        panelC.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        panelC.setLayout(new java.awt.GridLayout(0, 1, 2, 2));
+        jScrollPane1.setViewportView(panelC);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 490, 340));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,10 +146,41 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton2ActionPerformed
-        Main.tamanioProcesos=new int[Main.numProcesos];
-        
-        new VtnTablaPaginas().setVisible(true);
-        this.dispose();
+        boolean c = false;
+        if (panelC.getComponentCount() != 0) {
+            for (int j = 0; j < panelC.getComponentCount(); j++) {
+                if (((PnlProceso) panelC.getComponent(j)).getTxtCarcacter().toString().trim().isEmpty()) {
+                    c = true;
+                }
+            }
+        }
+        if (c) {
+            Mensaje.advertencia(this, "Hay campos vacios, llene todos los campos...");
+        } else {
+            ArrayList<PnlProceso> p = new ArrayList<>();
+
+            if (panelC.getComponentCount() != 0) {
+                for (int j = 0; j < panelC.getComponentCount(); j++) {
+                    p.add((PnlProceso) panelC.getComponent(j));
+                }
+            }
+            Main.tamanioProcesos = new int[Main.numProcesos];
+            int tamanio = 0;
+            for (int j = 0; j < p.size(); j++) {
+
+                try {
+                    tamanio = Integer.parseInt(p.get(j).getTxtCarcacter().getText());
+                } catch (Exception e) {
+                    Mensaje.advertencia(this, "Parece que un dígito no es valido, verifique sus entradas");
+                    break;
+                }
+                Main.tamanioProcesos[j] = tamanio;
+            }
+            new VtnTablaPaginas().setVisible(true);
+            this.dispose();
+        }
+
+
     }//GEN-LAST:event_boton2ActionPerformed
 
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
@@ -144,103 +188,7 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_boton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VtnTamanioProcesos().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Boton.Boton boton1;
@@ -251,5 +199,7 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelC;
     // End of variables declaration//GEN-END:variables
 }

@@ -168,6 +168,7 @@
             <Property name="majorTickSpacing" type="int" value="1"/>
             <Property name="maximum" type="int" value="50"/>
             <Property name="minorTickSpacing" type="int" value="1"/>
+            <Property name="paintLabels" type="boolean" value="true"/>
             <Property name="paintTicks" type="boolean" value="true"/>
             <Property name="snapToTicks" type="boolean" value="true"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -241,7 +242,7 @@
             <Property name="paintTicks" type="boolean" value="true"/>
             <Property name="snapToTicks" type="boolean" value="true"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="value" type="int" value="1"/>
+            <Property name="value" type="int" value="4"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>
