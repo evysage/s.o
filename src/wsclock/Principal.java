@@ -21,17 +21,16 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         for (int i = 1; i < 33; i++) {
-            cb_tmemoria1.addItem(i+"");
+            cb_tmemoria1.addItem(i + "");
             //cb_tmemoria2.addItem(i+""); 
-            double pot=Math.pow(2,i);
-            int num =(int)pot;
-            cb_pagina.addItem(num+"");
-            cb_procesos.addItem(i+"");
-            
+            double pot = Math.pow(2, i);
+            int num = (int) pot;
+            cb_pagina.addItem(num + "");
+            cb_procesos.addItem(i + "");
+
         }
         table.setVisible(false);
-        
-        
+
         //Soy kevin colaborando con Evelin
         //Cambios en el codigo
     }
@@ -130,39 +129,38 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_tmemoria1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int ban=0;
-        int t=Integer.parseInt( cb_procesos.getSelectedItem().toString());
-        
-        int procesos[]= new int [t];
+        int ban = 0;
+        int t = Integer.parseInt(cb_procesos.getSelectedItem().toString());
+
+        int procesos[] = new int[t];
         System.out.println(t);
-        
-        try{
-            for ( int i = 0; i <t; i++) {
-                procesos[i]=Integer.parseInt(JOptionPane.showInputDialog("Ingresa el tamaño del proceso: "+i));
-                
+
+        try {
+            for (int i = 0; i < t; i++) {
+                procesos[i] = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el tamaño del proceso: " + i));
+
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Solo números enteros");
-            ban=1;
-            
-       }
-        int marcos=0;
-        if(ban==0){
-           
-       
-           marcos=(Integer.parseInt(cb_tmemoria1.getSelectedItem().toString())/
-                   Integer.parseInt(cb_pagina.getSelectedItem().toString()));
-            System.out.println("marcos "+marcos);
+            ban = 1;
+
         }
-        for (int i = 1; i <=marcos; i++) {
-            TableColumn tc=  new TableColumn();
+        int marcos = 0;
+        if (ban == 0) {
+
+            marcos = (Integer.parseInt(cb_tmemoria1.getSelectedItem().toString())
+                    / Integer.parseInt(cb_pagina.getSelectedItem().toString()));
+            System.out.println("marcos " + marcos);
+        }
+        for (int i = 1; i <= marcos; i++) {
+            TableColumn tc = new TableColumn();
             JTableHeader header = table.getTableHeader();
-            
+
             table.addColumn(tc);
-            
+
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
