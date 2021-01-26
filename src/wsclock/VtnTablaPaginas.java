@@ -8,9 +8,11 @@ package wsclock;
 import com.sun.javafx.geom.AreaOp;
 import java.util.Hashtable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,17 +23,94 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     /**
      * Creates new form VtnPrincipal
      */
-    int pagina=0;
+    int pagina = 0;
 
     public VtnTablaPaginas() {
         initComponents();
         this.setLocationRelativeTo(null);
+        DefaultTableModel modelo = new DefaultTableModel();
 
-        Hashtable< Integer, JLabel> table = new Hashtable< Integer, JLabel>();
-        for (int i = 0; i <= 15; i++) {
-            table.put(i, new JLabel(String.valueOf(((int) Math.pow(2, i)))));
+        int ban = 0, sumaRam, sumaProcesos = 0, marcos = 0, tam_pag = Main.tamanioPagina;
+        int t =Main.numProcesos;
+        int tam = 0;
+        String procesos[][] = new String[t][2];
+        String procesos2[][] = new String[t][3];
+
+        System.out.println(t);
+        //Random r= new Random();
+
+        sumaRam = Main.tamanioMemoriaRAM+ Main.tamanioMemoriaVirtual;
+        String paginas[][] = new String[sumaRam][4];
+
+        Pagina p;
+        String referencia = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        try {
+            for (int i = 0; i < procesos.length; i++) {
+
+                tam = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el tamaño del proceso " + referencia.charAt(i) + ", en mb: "));
+                procesos[i][0] = tam + "";
+                procesos[i][1] = referencia.charAt(i) + "";
+                sumaProcesos += tam;
+                procesos2[i][0] = String.valueOf(referencia.charAt(i));
+                procesos2[i][1] = String.valueOf(tam);
+
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Solo números enteros");
+            ban = 1;
+
         }
-        
+        int division = 0;
+        int aux = 0;
+        if (ban == 0 && (sumaRam) >= sumaProcesos / 1000) {
+            division = sumaRam / t;
+
+            for (int i = 0; i < t; i++) {
+                procesos2[i][2] = String.valueOf(division);
+
+            }
+            if (division * t < sumaRam) {
+                aux = sumaRam - division * t;
+                for (int i = 0; i < aux; i++) {
+
+                    procesos2[i][2] = String.valueOf(division + 1);
+
+                }
+            }
+        }
+
+        if ((sumaRam) >= sumaProcesos / 1000) {
+            for (int i = 0; i < t; i++) {
+
+                System.out.println("proceso: " + procesos2[i][0] + " " + " tamaño: " + procesos2[i][1] + " numero de paginas: " + procesos2[i][2]);
+
+            }
+            int cont = 0;
+            //table.setBackground(Color.red); 
+            modelo.addColumn("Marcos");
+            jTable2.setModel(modelo);
+
+            /////////esta parte es la que no está bien     
+            for (int j = 0; j < sumaRam; j++) {
+                modelo.addRow(procesos2);
+                for (int k = 0; k < cont; k++) {
+
+                    for (int i = 0; i < t; i++) {
+                        //cont=Integer.parseInt(procesos2[i][2]);
+                        System.out.println("proc " + procesos2[i][0] + procesos2[i][2]);
+                        modelo.setValueAt(procesos2[i][0] + procesos2[i][2], j, 0);
+                    }
+
+                }
+
+                //modelo.addRow(procesos);
+                jTable2.setModel(modelo);
+                jTable2.repaint();
+            }
+
+        }
+
     }
 
     /**
@@ -56,6 +135,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        boton3 = new Boton.Boton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,7 +183,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
                 boton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(boton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, -1, -1));
+        jPanel1.add(boton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, -1, -1));
 
         boton2.setText("Ejecutar algoritmo");
         boton2.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +191,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
                 boton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(boton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 570, -1, -1));
+        jPanel1.add(boton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 580, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Tabla de páginas");
@@ -161,6 +241,14 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         jTextField1.setEditable(false);
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 100, 120, -1));
 
+        boton3.setText("Regresar");
+        boton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(boton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,181 +264,25 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton2ActionPerformed
-        Main.tamanioProcesos=new int[Main.numProcesos];
-        
-        
+
+        //Algoritmo WSClocks 
+        boton2.setEnabled(false);
     }//GEN-LAST:event_boton2ActionPerformed
 
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
-        new VtnMemoria().setVisible(true);
-        this.dispose();
+        boton2.setEnabled(true);
     }//GEN-LAST:event_boton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VtnTablaPaginas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VtnTablaPaginas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VtnTablaPaginas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VtnTablaPaginas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void boton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton3ActionPerformed
+        new VtnTamanioProcesos().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_boton3ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VtnTablaPaginas().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Boton.Boton boton1;
     private Boton.Boton boton2;
+    private Boton.Boton boton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

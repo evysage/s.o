@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import recursos.Mensaje;
 
 /**
  *
@@ -23,12 +24,12 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
      * Creates new form VtnPrincipal
      */
     public VtnTamanioProcesos() {
-     
+
         initComponents();
         for (int i = 0; i < Main.numProcesos; i++) {
             PnlProceso pL = new PnlProceso();
             pL.setTamP(this);
-            pL.setLabelProceso("Proceso "+i);
+            pL.setLabelProceso("Proceso " + i);
             panelC.add(pL);
             panelC.updateUI();
         }
@@ -145,21 +146,41 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton2ActionPerformed
-        
-        ArrayList<PnlProceso> p = new ArrayList<>();
-
+        boolean c = false;
         if (panelC.getComponentCount() != 0) {
             for (int j = 0; j < panelC.getComponentCount(); j++) {
-                p.add((PnlProceso) panelC.getComponent(j));
+                if (((PnlProceso) panelC.getComponent(j)).getTxtCarcacter().toString().trim().isEmpty()) {
+                    c = true;
+                }
             }
         }
-        Main.tamanioProcesos = new int[Main.numProcesos];
+        if (c) {
+            Mensaje.advertencia(this, "Hay campos vacios, llene todos los campos...");
+        } else {
+            ArrayList<PnlProceso> p = new ArrayList<>();
 
-        for (int j = 0; j < p.size(); j++) {
-            Main.tamanioProcesos[j] = Integer.parseInt(p.get(j).getTxtCarcacter().getText());
+            if (panelC.getComponentCount() != 0) {
+                for (int j = 0; j < panelC.getComponentCount(); j++) {
+                    p.add((PnlProceso) panelC.getComponent(j));
+                }
+            }
+            Main.tamanioProcesos = new int[Main.numProcesos];
+            int tamanio = 0;
+            for (int j = 0; j < p.size(); j++) {
+
+                try {
+                    tamanio = Integer.parseInt(p.get(j).getTxtCarcacter().getText());
+                } catch (Exception e) {
+                    Mensaje.advertencia(this, "Parece que un dígito no es valido, verifique sus entradas");
+                    break;
+                }
+                Main.tamanioProcesos[j] = tamanio;
+            }
+            new VtnTablaPaginas().setVisible(true);
+            this.dispose();
         }
-        new VtnTablaPaginas().setVisible(true);
-        this.dispose();
+
+
     }//GEN-LAST:event_boton2ActionPerformed
 
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
@@ -167,103 +188,7 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_boton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VtnTamanioProcesos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VtnTamanioProcesos().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Boton.Boton boton1;

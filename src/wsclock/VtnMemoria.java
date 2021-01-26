@@ -26,12 +26,20 @@ public class VtnMemoria extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         Hashtable< Integer, JLabel> table = new Hashtable< Integer, JLabel>();
-        for (int i = 0; i <= 15; i++) {
+        for (int i = 0; i <= 8; i++) {
             table.put(i, new JLabel(String.valueOf(((int) Math.pow(2, i)))));
         }
-        jSlider2.setMaximum(15);
+        jSlider2.setMaximum(8);
         jSlider2.setLabelTable(table);
         jSlider2.setToolTipText("");
+
+        Hashtable< Integer, JLabel> table2 = new Hashtable< Integer, JLabel>();
+        for (int i = 0; i <= 2000; i++) {
+            table2.put(i, new JLabel(String.valueOf(i)));
+        }
+        jSlider3.setMaximum(2000);
+        jSlider3.setLabelTable(table2);
+        jSlider3.setToolTipText("");
 
     }
 
@@ -129,6 +137,7 @@ public class VtnMemoria extends javax.swing.JFrame {
         jSlider2.setMajorTickSpacing(1);
         jSlider2.setMaximum(50);
         jSlider2.setMinorTickSpacing(1);
+        jSlider2.setPaintLabels(true);
         jSlider2.setPaintTicks(true);
         jSlider2.setSnapToTicks(true);
         jSlider2.setToolTipText("");
@@ -163,7 +172,7 @@ public class VtnMemoria extends javax.swing.JFrame {
         jSlider3.setPaintTicks(true);
         jSlider3.setSnapToTicks(true);
         jSlider3.setToolTipText("");
-        jSlider3.setValue(1);
+        jSlider3.setValue(4);
         jSlider3.setOpaque(false);
         jSlider3.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -218,47 +227,11 @@ public class VtnMemoria extends javax.swing.JFrame {
     }//GEN-LAST:event_jSlider2StateChanged
 
     private void jSlider3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider3StateChanged
-        virtual = (int) Math.pow(2, jSlider3.getValue());
+        virtual = jSlider3.getValue();
         txtMemoryVirt.setText(virtual + " MB");
     }//GEN-LAST:event_jSlider3StateChanged
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VtnMemoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VtnMemoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VtnMemoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VtnMemoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VtnMemoria().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Boton.Boton boton1;
