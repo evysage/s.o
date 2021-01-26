@@ -154,10 +154,10 @@ public class VtnProcesos extends javax.swing.JFrame {
         txtMemoryRAM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel1.add(txtMemoryRAM, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 99, 31));
 
-        jLabel6.setText("1 MB");
+        jLabel6.setText("1 Bytes");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
 
-        jLabel7.setText("32768 MB");
+        jLabel7.setText("32768 Bytes");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -204,7 +204,7 @@ public class VtnProcesos extends javax.swing.JFrame {
 
     private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
         pagina = (int) Math.pow(2, jSlider2.getValue());
-        txtMemoryRAM.setText(pagina + " MB");
+        txtMemoryRAM.setText(pagina + " B");
     }//GEN-LAST:event_jSlider2StateChanged
 
 

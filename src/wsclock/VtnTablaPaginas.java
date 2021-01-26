@@ -24,92 +24,49 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
      * Creates new form VtnPrincipal
      */
     int pagina = 0;
+    int numeroPaginasVirtual = 0;
+    int numeroPaginasRAM = 0;
+    long tamanioVirtual = Main.tamanioMemoriaVirtual * 1000000;
+    long tamanioRAM = Main.tamanioMemoriaRAM * 1000000;
 
     public VtnTablaPaginas() {
         initComponents();
         this.setLocationRelativeTo(null);
-        DefaultTableModel modelo = new DefaultTableModel();
+        numeroPaginasVirtual = (int) (tamanioVirtual) / Main.tamanioPagina;
+        numeroPaginasRAM = (int) (tamanioRAM) / Main.tamanioPagina;
 
-        int ban = 0, sumaRam, sumaProcesos = 0, marcos = 0, tam_pag = Main.tamanioPagina;
-        int t =Main.numProcesos;
-        int tam = 0;
-        String procesos[][] = new String[t][2];
-        String procesos2[][] = new String[t][3];
+        DefaultTableModel modeloRAM;
+        String[] columnas1 = {"Número de marco de pagina", "Direcciones de memoria"};
+        modeloRAM = new DefaultTableModel(null, columnas1);
+        String[] filas1 = new String[2];
 
-        System.out.println(t);
-        //Random r= new Random();
-
-        sumaRam = Main.tamanioMemoriaRAM+ Main.tamanioMemoriaVirtual;
-        String paginas[][] = new String[sumaRam][4];
-
-        Pagina p;
-        String referencia = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        try {
-            for (int i = 0; i < procesos.length; i++) {
-
-                tam = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el tamaño del proceso " + referencia.charAt(i) + ", en mb: "));
-                procesos[i][0] = tam + "";
-                procesos[i][1] = referencia.charAt(i) + "";
-                sumaProcesos += tam;
-                procesos2[i][0] = String.valueOf(referencia.charAt(i));
-                procesos2[i][1] = String.valueOf(tam);
-
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Solo números enteros");
-            ban = 1;
-
+        for (int i = 0; i < numeroPaginasRAM; i++) {
+            filas1[0] = i + "";
+            filas1[1] = "";
+            modeloRAM.addRow(filas1);
         }
-        int division = 0;
-        int aux = 0;
-        if (ban == 0 && (sumaRam) >= sumaProcesos / 1000) {
-            division = sumaRam / t;
+        jTable2.setModel(modeloRAM);
 
-            for (int i = 0; i < t; i++) {
-                procesos2[i][2] = String.valueOf(division);
+        DefaultTableModel modeloPaginacion;
 
-            }
-            if (division * t < sumaRam) {
-                aux = sumaRam - division * t;
-                for (int i = 0; i < aux; i++) {
-
-                    procesos2[i][2] = String.valueOf(division + 1);
-
-                }
+        String[] columnas2 = new String[Main.numProcesos];
+        for (int i = 0; i < Main.numProcesos; i++) {
+            columnas2[i] = "Proceso " + i;
+        }
+        modeloPaginacion = new DefaultTableModel(null, columnas2);
+        String[] filas2 = new String[Main.numProcesos];
+        
+        for (int i = 0; i < Main.procesos.length; i++) {
+            for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
+                
             }
         }
-
-        if ((sumaRam) >= sumaProcesos / 1000) {
-            for (int i = 0; i < t; i++) {
-
-                System.out.println("proceso: " + procesos2[i][0] + " " + " tamaño: " + procesos2[i][1] + " numero de paginas: " + procesos2[i][2]);
-
-            }
-            int cont = 0;
-            //table.setBackground(Color.red); 
-            modelo.addColumn("Marcos");
-            jTable2.setModel(modelo);
-
-            /////////esta parte es la que no está bien     
-            for (int j = 0; j < sumaRam; j++) {
-                modelo.addRow(procesos2);
-                for (int k = 0; k < cont; k++) {
-
-                    for (int i = 0; i < t; i++) {
-                        //cont=Integer.parseInt(procesos2[i][2]);
-                        System.out.println("proc " + procesos2[i][0] + procesos2[i][2]);
-                        modelo.setValueAt(procesos2[i][0] + procesos2[i][2], j, 0);
-                    }
-
-                }
-
-                //modelo.addRow(procesos);
-                jTable2.setModel(modelo);
-                jTable2.repaint();
-            }
-
+        for (int i = 0; i < numeroPaginasRAM; i++) {
+            filas2[0] = i + "";
+            filas2[1] = "";
+            modeloRAM.addRow(filas2);
         }
+        jTable1.setModel(modeloPaginacion);
 
     }
 
@@ -134,8 +91,9 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         boton3 = new Boton.Boton();
+        jLabel5 = new javax.swing.JLabel();
+        jTiempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,7 +121,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(364, Short.MAX_VALUE))
+                .addContainerGap(374, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +133,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 11, 1000, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 11, 1010, -1));
 
         boton1.setText("Reiniciar");
         boton1.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +168,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 760, 410));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 720, 410));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -233,13 +191,10 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 137, 210, 420));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 167, 240, 390));
 
         jLabel4.setText("Tiempo virtual:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, 90, 20));
-
-        jTextField1.setEditable(false);
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 100, 120, -1));
 
         boton3.setText("Regresar");
         boton3.addActionListener(new java.awt.event.ActionListener() {
@@ -248,6 +203,14 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
             }
         });
         jPanel1.add(boton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, -1, -1));
+
+        jLabel5.setText("Memoria virtual");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 140, 230, -1));
+
+        jTiempo.setBackground(new java.awt.Color(153, 153, 153));
+        jTiempo.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        jTiempo.setOpaque(true);
+        jPanel1.add(jTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 100, 80, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -264,12 +227,18 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton2ActionPerformed
-
+        hilo = new Hilo(jTiempo);
+        if (corriendo == false) {
+            estado = true;
+            corriendo = true;
+            hilo();
+        }
         //Algoritmo WSClocks 
         boton2.setEnabled(false);
     }//GEN-LAST:event_boton2ActionPerformed
 
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
+        hilo.stop();
         boton2.setEnabled(true);
     }//GEN-LAST:event_boton1ActionPerformed
 
@@ -287,12 +256,28 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jTiempo;
     // End of variables declaration//GEN-END:variables
+ int segundo = 0;
+
+    boolean estado = true;
+    boolean corriendo = false;
+    Hilo hilo;
+
+    private void hilo() {
+
+        if (estado == true) {
+
+            hilo.start();
+        } else {
+            hilo.stop();
+        }
+    }
 }

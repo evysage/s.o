@@ -163,7 +163,7 @@ public class VtnMemoria extends javax.swing.JFrame {
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 340, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Seleccione la cantidad de memoria virtual en megabytes.");
+        jLabel5.setText("Seleccione la cantidad de memoria virtual en GigaBytes.");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 560, 34));
 
         jSlider3.setMajorTickSpacing(1);
@@ -188,9 +188,9 @@ public class VtnMemoria extends javax.swing.JFrame {
         jPanel1.add(txtMemoryVirt, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 99, 31));
 
         jLabel8.setText("4MB");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
 
-        jLabel9.setText("2TB");
+        jLabel9.setText("2GB");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

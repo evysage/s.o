@@ -20,6 +20,7 @@ public class Main {
     public static int tamanioPagina = 0;
     public static int tamanioWS = 0;
     public static int tamanioProcesos[];
+    public static Proceso procesos[];
 
     public static void main(String[] args) {
         try {

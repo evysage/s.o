@@ -119,7 +119,7 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 159, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Ingrese el tamaño de la cada proceso");
+        jLabel8.setText("Ingrese el tamaño de la cada proceso en bytes");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 420, 34));
 
         panelC.setBackground(new java.awt.Color(255, 255, 255));
@@ -179,7 +179,24 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
             new VtnTablaPaginas().setVisible(true);
             this.dispose();
         }
-
+        Main.procesos = new Proceso[Main.numProcesos];
+        for (int i = 0; i < Main.numProcesos; i++) {
+            Proceso pr = new Proceso();
+            pr.nombre = "Proceso " + i;
+            pr.tamanio = Main.tamanioProcesos[i];
+            pr.ejecutando = false;
+            float numPaginasF = Main.tamanioProcesos[i] / Main.tamanioPagina;
+            int numPaginas = Main.tamanioProcesos[i] / Main.tamanioPagina;
+            if ((numPaginasF - numPaginas) > 0.5) {
+                numPaginas += 1;
+            }
+            Pagina pg[] = new Pagina[numPaginas];
+            for (int j = 0; j < numPaginas; j++) {
+                Pagina pag = new Pagina("A" + i, 0, false, false);
+                pg[j] = pag;
+            }
+            pr.paginas = pg;
+        }
 
     }//GEN-LAST:event_boton2ActionPerformed
 
@@ -187,7 +204,6 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
         new VtnProcesos().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_boton1ActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
