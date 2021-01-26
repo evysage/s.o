@@ -36,7 +36,7 @@ public class VtnProcesos extends javax.swing.JFrame {
 
         SpinnerNumberModel num = new SpinnerNumberModel();
         num.setMaximum(50);
-        num.setMinimum(1);
+        num.setMinimum(0);
         num.setValue(1);
         num.setStepSize(1);
         jSpinner1.setModel(num);
@@ -154,10 +154,10 @@ public class VtnProcesos extends javax.swing.JFrame {
         txtMemoryRAM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel1.add(txtMemoryRAM, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 99, 31));
 
-        jLabel6.setText("2MB");
+        jLabel6.setText("1 MB");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
 
-        jLabel7.setText("32MB");
+        jLabel7.setText("32768 MB");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -169,7 +169,7 @@ public class VtnProcesos extends javax.swing.JFrame {
         jLabel8.setText("Seleccione el tamaño de la página");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 560, 34));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" }));
         jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 320, 80, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
