@@ -5,14 +5,9 @@
  */
 package wsclock;
 
-import com.sun.javafx.geom.AreaOp;
-import java.util.Hashtable;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -28,15 +23,15 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     int numeroPaginasRAM = 0;
     long tamanioVirtual = Main.tamanioMemoriaVirtual * 1000000;
     long tamanioRAM = Main.tamanioMemoriaRAM * 1000000;
-
+    DefaultTableModel modeloRAM;
     public VtnTablaPaginas() {
         initComponents();
         this.setLocationRelativeTo(null);
         numeroPaginasVirtual = (int) (tamanioVirtual) / Main.tamanioPagina;
         numeroPaginasRAM = (int) (tamanioRAM) / Main.tamanioPagina;
 
-        DefaultTableModel modeloRAM;
-        String[] columnas1 = {"Número de marco de pagina", "Direcciones de memoria"};
+       
+        String[] columnas1 = {"Número de marco de pagina", "Direcciones de memoria","Bit R","Bit M","Tiempo"};
         modeloRAM = new DefaultTableModel(null, columnas1);
         String[] filas1 = new String[2];
 
@@ -44,29 +39,81 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
             filas1[0] = i + "";
             filas1[1] = "";
             modeloRAM.addRow(filas1);
+            modeloRAM.setValueAt(0, i, 2);
+            modeloRAM.setValueAt(0, i, 2);
         }
         jTable2.setModel(modeloRAM);
 
         DefaultTableModel modeloPaginacion;
 
         String[] columnas2 = new String[Main.numProcesos];
+        String[] filas2 = new String[Main.numProcesos];
+
         for (int i = 0; i < Main.numProcesos; i++) {
-            columnas2[i] = "Proceso " + i;
+            columnas2[i] = "Proceso " +Main.procesos[i].getNombre();
         }
         modeloPaginacion = new DefaultTableModel(null, columnas2);
-        String[] filas2 = new String[Main.numProcesos];
-        
-        for (int i = 0; i < Main.procesos.length; i++) {
+        int a=0;
+        int mayor = 0;
+        for (int i = 0; i < Main.numProcesos; i++) {
             for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
+                a++;
+              // modeloPaginacion.addRow(filas2);
+            }
+            if(a>mayor){
+                mayor=a;
+                a=0;
+            }else{
+                a=0;
                 
             }
         }
-        for (int i = 0; i < numeroPaginasRAM; i++) {
-            filas2[0] = i + "";
-            filas2[1] = "";
-            modeloRAM.addRow(filas2);
+        modeloPaginacion.setRowCount(mayor);
+        for (int i = 0; i < Main.numProcesos; i++) {
+            for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
+                modeloPaginacion.setValueAt(Main.procesos[i].paginas[j].getPagina(), j, i);
+            }
         }
+
         jTable1.setModel(modeloPaginacion);
+
+    }
+
+    public void algoritmoSClock() {
+        /*
+    int posicion=0;
+    boolean procesos;
+    while(procesos){
+     * if(R==1){
+           + La página se usó en el tick actual. No es candidata
+    
+           R=false; //+ Se apaga el bit R
+           posicion++;// Se adelanta la manecilla y se repite el algoritmo
+           + Ver incisos a->b
+    }else{
+    if(tiempo>tiempoRango){
+       - Indica que ya no pertenece al anillo y no es necesario protegerla. 
+                - La nueva página se colocaría en el iguiente marco (Ver incisos c -> d)
+    }else{
+     + Si la edad > t y la página no ésta limpia
+                - No se podrá quitar del anillo a menos de que se proteja
+                - Sí existe una página limpia se pondrá en uso de inmediato
+                - Para evitar cambios de procesos la manecilla del anillo se adelanta y el algoritmo continua su análisis
+    }
+    }
+    
+   if(manecilla){//Si la manecilla da la vuelta completa en el anillo, el valor sera true
+           // Si se guarda al menos una escritura en el anillo
+           // Seguirá dando vueltas la manecilla, hasta que algún proceso termine su escritura y la limpie
+           // Si es limpiada se quitara del anillo automáticamente
+
+    }else{
+      
+           // Si no se guarda ninguna escritura en el anillo
+           //Indica que todas las páginas están dentro del anillo
+           //Se utilizará cualquier marco de página que se encuentre vacío, sino es así se guardara en disco
+    }
+         */
 
     }
 
@@ -172,17 +219,17 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Número de marco", "Memoria virtual"
+                "Número de marco", "Memoria virtual", "Bit R", "Bit M", "Tiempo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -191,7 +238,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 167, 240, 390));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 167, 520, 390));
 
         jLabel4.setText("Tiempo virtual:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, 90, 20));
@@ -207,8 +254,9 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         jLabel5.setText("Memoria virtual");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 140, 230, -1));
 
-        jTiempo.setBackground(new java.awt.Color(153, 153, 153));
-        jTiempo.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        jTiempo.setBackground(new java.awt.Color(204, 204, 204));
+        jTiempo.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        jTiempo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jTiempo.setOpaque(true);
         jPanel1.add(jTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 100, 80, 20));
 
@@ -216,7 +264,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1105, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1309, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,6 +283,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         }
         //Algoritmo WSClocks 
         boton2.setEnabled(false);
+        algoritmo();
     }//GEN-LAST:event_boton2ActionPerformed
 
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
@@ -247,6 +296,26 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_boton3ActionPerformed
 
+    
+    private void algoritmo(){
+        
+        
+       // modeloRAM.setValueAt(0, 0, 2);
+       // modeloRAM.setValueAt(0, 0, 3);
+        //modeloRAM.setValueAt(jTiempo.getText().toString(), 0, 4);
+        
+      /*  for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
+                
+                modeloRAM.setValueAt(Main.procesos[i].paginas[j].getPagina(), j, i+1);
+            }
+        }*/
+
+      //  jTable1.setModel(modeloRAM);
+
+        
+        jTable2.setModel(modeloRAM);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Boton.Boton boton1;

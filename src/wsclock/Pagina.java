@@ -10,15 +10,36 @@ package wsclock;
  * @author Evelyn
  */
 public class Pagina {
-    String pagina;
-    int tiempo;
-    boolean m, r;
+
+    private String pagina;
+    private int tiempo;
+    private boolean m, r;
+    private int tamanioPag;
 
     public Pagina(String pagina, int tiempo, boolean m, boolean r) {
         this.pagina = pagina;
         this.tiempo = tiempo;
         this.m = m;
         this.r = r;
+    }
+
+    public Pagina() {
+    }
+
+    public Pagina(String pagina, int tiempo, boolean m, boolean r, int tamanioPag) {
+        this.pagina = pagina;
+        this.tiempo = tiempo;
+        this.m = m;
+        this.r = r;
+        this.tamanioPag = tamanioPag;
+    }
+
+    public int getTamanioPag() {
+        return tamanioPag;
+    }
+
+    public void setTamanioPag(int tamanioPag) {
+        this.tamanioPag = tamanioPag;
     }
 
     public String getPagina() {

@@ -165,39 +165,46 @@ public class VtnTamanioProcesos extends javax.swing.JFrame {
                 }
             }
             Main.tamanioProcesos = new int[Main.numProcesos];
-            int tamanio = 0;
+            float tamanio = 0;
+            int tamanio2 = 0;
             for (int j = 0; j < p.size(); j++) {
 
                 try {
                     tamanio = Integer.parseInt(p.get(j).getTxtCarcacter().getText());
+                    tamanio2 = Math.round(tamanio);
                 } catch (Exception e) {
                     Mensaje.advertencia(this, "Parece que un dígito no es valido, verifique sus entradas");
                     break;
                 }
-                Main.tamanioProcesos[j] = tamanio;
+                Main.tamanioProcesos[j] = tamanio2;
             }
-            new VtnTablaPaginas().setVisible(true);
-            this.dispose();
         }
+        String alfa= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Main.procesos = new Proceso[Main.numProcesos];
         for (int i = 0; i < Main.numProcesos; i++) {
             Proceso pr = new Proceso();
-            pr.nombre = "Proceso " + i;
+            pr.nombre = String.valueOf(alfa.charAt(i));
             pr.tamanio = Main.tamanioProcesos[i];
             pr.ejecutando = false;
             float numPaginasF = Main.tamanioProcesos[i] / Main.tamanioPagina;
             int numPaginas = Main.tamanioProcesos[i] / Main.tamanioPagina;
-            if ((numPaginasF - numPaginas) > 0.5) {
-                numPaginas += 1;
-            }
+
+            numPaginas += 1;
+
+            int tamanioPg = Main.tamanioProcesos[i] / numPaginas;
+
             Pagina pg[] = new Pagina[numPaginas];
             for (int j = 0; j < numPaginas; j++) {
-                Pagina pag = new Pagina("A" + i, 0, false, false);
+                Pagina pag = new Pagina(String.valueOf(alfa.charAt(i))+"."+j, 0, false, false, tamanioPg);
                 pg[j] = pag;
+
             }
-            pr.paginas = pg;
+            pr.setPaginas(pg);
+            Main.procesos[i] = pr;
         }
 
+        new VtnTablaPaginas().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_boton2ActionPerformed
 
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
