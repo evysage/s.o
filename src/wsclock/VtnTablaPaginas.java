@@ -22,7 +22,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     int numeroPaginasVirtual = 0;
     int numeroPaginasRAM = 0;
     long tamanioVirtual = Main.tamanioMemoriaVirtual * 1000000;
-    long tamanioRAM = Main.tamanioMemoriaRAM * 1000000;
+    long tamanioRAM = Main.tamanioMemoriaRAM * 1000;
     DefaultTableModel modeloRAM;
     public VtnTablaPaginas() {
         initComponents();
@@ -30,20 +30,22 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         numeroPaginasVirtual = (int) (tamanioVirtual) / Main.tamanioPagina;
         numeroPaginasRAM = (int) (tamanioRAM) / Main.tamanioPagina;
 
-       
-        String[] columnas1 = {"Número de marco de pagina", "Direcciones de memoria","Bit R","Bit M","Tiempo"};
+       String[] columnas1 = {"Número de marco de pagina", "Direcciones de memoria","Bit R","Tiempo"};
         modeloRAM = new DefaultTableModel(null, columnas1);
         String[] filas1 = new String[2];
 
+        
+        
+        
         for (int i = 0; i < numeroPaginasRAM; i++) {
             filas1[0] = i + "";
             filas1[1] = "";
             modeloRAM.addRow(filas1);
             modeloRAM.setValueAt(0, i, 2);
-            modeloRAM.setValueAt(0, i, 2);
+            //modeloRAM.setValueAt(0, i, 1);
         }
         jTable2.setModel(modeloRAM);
-
+       
         DefaultTableModel modeloPaginacion;
 
         String[] columnas2 = new String[Main.numProcesos];
@@ -130,7 +132,6 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        boton1 = new Boton.Boton();
         boton2 = new Boton.Boton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -181,14 +182,6 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 11, 1010, -1));
-
-        boton1.setText("Reiniciar");
-        boton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(boton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, -1, -1));
 
         boton2.setText("Ejecutar algoritmo");
         boton2.addActionListener(new java.awt.event.ActionListener() {
@@ -275,12 +268,17 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton2ActionPerformed
+        
+
+
         hilo = new Hilo(jTiempo, jTable2,modeloRAM );
         if (corriendo == false) {
             estado = true;
             corriendo = true;
              hilo();
              
+        }else{
+            System.out.println("sigue corriendo");
         }
        
         
@@ -289,78 +287,22 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_boton2ActionPerformed
 
-    private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
-        hilo.stop();
-        boton2.setEnabled(true);
-    }//GEN-LAST:event_boton1ActionPerformed
-
     private void boton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton3ActionPerformed
+        if (hilo!=null) {
+           if (hilo.isAlive()) {
+            hilo.stop();
+        } 
+        }
+        
+        
         new VtnTamanioProcesos().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_boton3ActionPerformed
  
     
-    private void algoritmo(){
-        
-        
-        LSLC lista = new LSLC();
-        Nodo n ;
-        for (int i = 0; i < Main.numProcesos; i++) {
-            for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
-                //n = new Nodo(Main.procesos[i].paginas[j].getPagina(), 1, 1,jTiempo.getText() );
-                lista.insertar(Main.procesos[i].paginas[j].getPagina(), 0,0 ,23);
-                System.out.println(Main.procesos[i].nombre+" "+Main.procesos[i].tamanio+" "+Main.procesos[i].paginas[j].getPagina());
-                
-            }
-        }
-        System.out.println("");
-        System.out.println("");
-        int aux=0;
-        if (!lista.vacia()) {
-             
-                  
-              for (int i = 0; i < Main.numProcesos; i++) {
-              
-               for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
-                
-                lista.insertar(Main.procesos[i].paginas[j].getPagina(),0,0, 1);
-                 modeloRAM.setValueAt(Main.procesos[i].paginas[j].getPagina(), aux, 1);
-                 modeloRAM.setValueAt(0, aux, 2);
-                 modeloRAM.setValueAt(0, aux, 3);
-                 modeloRAM.setValueAt(jTiempo.getText(), aux, 4);
-
-                 aux++;
-                 
-            }
-                
-              
-        }
-        jTable2.setModel(modeloRAM);
-            lista.mostrarLista();
-            
-        }
-        
-      
-        
-       // modeloRAM.setValueAt(0, 0, 2);
-       // modeloRAM.setValueAt(0, 0, 3);
-        //modeloRAM.setValueAt(jTiempo.getText().toString(), 0, 4);
-        
-      /*  for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
-                
-                modeloRAM.setValueAt(Main.procesos[i].paginas[j].getPagina(), j, i+1);
-            }
-        }*/
-
-      //  jTable1.setModel(modeloRAM);
-
-        
-       
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private Boton.Boton boton1;
     private Boton.Boton boton2;
     private Boton.Boton boton3;
     private javax.swing.JLabel jLabel1;
