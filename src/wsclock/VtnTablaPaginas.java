@@ -275,15 +275,18 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton2ActionPerformed
-        hilo = new Hilo(jTiempo);
+        hilo = new Hilo(jTiempo, jTable2,modeloRAM );
         if (corriendo == false) {
             estado = true;
             corriendo = true;
-            hilo();
+             hilo();
+             
         }
-        //Algoritmo WSClocks 
+       
+        
+       // algoritmo();
         boton2.setEnabled(false);
-        algoritmo();
+        
     }//GEN-LAST:event_boton2ActionPerformed
 
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
@@ -295,10 +298,49 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
         new VtnTamanioProcesos().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_boton3ActionPerformed
-
+ 
     
     private void algoritmo(){
         
+        
+        LSLC lista = new LSLC();
+        Nodo n ;
+        for (int i = 0; i < Main.numProcesos; i++) {
+            for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
+                //n = new Nodo(Main.procesos[i].paginas[j].getPagina(), 1, 1,jTiempo.getText() );
+                lista.insertar(Main.procesos[i].paginas[j].getPagina(), 0,0 ,23);
+                System.out.println(Main.procesos[i].nombre+" "+Main.procesos[i].tamanio+" "+Main.procesos[i].paginas[j].getPagina());
+                
+            }
+        }
+        System.out.println("");
+        System.out.println("");
+        int aux=0;
+        if (!lista.vacia()) {
+             
+                  
+              for (int i = 0; i < Main.numProcesos; i++) {
+              
+               for (int j = 0; j < Main.procesos[i].paginas.length; j++) {
+                
+                lista.insertar(Main.procesos[i].paginas[j].getPagina(),0,0, 1);
+                 modeloRAM.setValueAt(Main.procesos[i].paginas[j].getPagina(), aux, 1);
+                 modeloRAM.setValueAt(0, aux, 2);
+                 modeloRAM.setValueAt(0, aux, 3);
+                 modeloRAM.setValueAt(jTiempo.getText(), aux, 4);
+
+                 aux++;
+                 
+            }
+                
+              
+        }
+        jTable2.setModel(modeloRAM);
+            lista.mostrarLista();
+            
+        }
+        
+      
         
        // modeloRAM.setValueAt(0, 0, 2);
        // modeloRAM.setValueAt(0, 0, 3);
@@ -314,7 +356,7 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
       //  jTable1.setModel(modeloRAM);
 
         
-        jTable2.setModel(modeloRAM);
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -331,8 +373,8 @@ public class VtnTablaPaginas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JLabel jTiempo;
+    public javax.swing.JTable jTable2;
+    public javax.swing.JLabel jTiempo;
     // End of variables declaration//GEN-END:variables
  int segundo = 0;
 

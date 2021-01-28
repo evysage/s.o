@@ -11,16 +11,26 @@ package wsclock;
  */
 public class Nodo {
 
-    private String s;
-    private byte R;
-    private byte M;
-    private int numeroMarcoPagina;
+    protected String s, nombre;
+    protected int R;
+    protected int M;
+    protected int tiempo;
+    protected int numeroMarcoPagina;
+    
+    protected Nodo sig;
+  
 
-    private Nodo sig = null;
-    private Nodo ant = null;
-    private Nodo abj = null;
-    private Nodo arr = null;
+    public Nodo(String nombre,int R, int M, int tiempo) {
+      
+        this.R = R;
+        this.M = M;
+        this.tiempo=tiempo;
+        this.nombre=nombre;
+        sig=this;
+    }
 
+    
+    
     public Nodo(String s) {
         this.s = s;
     }
@@ -56,44 +66,7 @@ public class Nodo {
     /**
      * @return the ant
      */
-    public Nodo getAnt() {
-        return ant;
-    }
-
-    /**
-     * @param ant the ant to set
-     */
-    public void setAnt(Nodo ant) {
-        this.ant = ant;
-    }
-
-    /**
-     * @return the abj
-     */
-    public Nodo getAbj() {
-        return abj;
-    }
-
-    /**
-     * @param abj the abj to set
-     */
-    public void setAbj(Nodo abj) {
-        this.abj = abj;
-    }
-
-    /**
-     * @return the arr
-     */
-    public Nodo getArr() {
-        return arr;
-    }
-
-    /**
-     * @param arr the arr to set
-     */
-    public void setArr(Nodo arr) {
-        this.arr = arr;
-    }
+  
 
     public String desp() {
         return s;

@@ -13,7 +13,62 @@ import javax.swing.JFrame;
  */
 public class LSLC {
 
-    private Nodo r = null;
+    private Nodo r;
+    private Nodo sig ;
+    private Nodo ant;
+    private Nodo abj;
+    private Nodo arr ;
+    
+   protected Nodo ultimo;
+
+    public LSLC() {
+        ultimo=null;
+    }
+    
+    public boolean vacia(){
+        return ultimo==null;
+    }
+    
+    public LSLC insertar(String nombre, int tiempo, int r, int m){
+        
+        Nodo nuevo= new Nodo(nombre, tiempo,r, m);
+        if(ultimo!=null  ){
+           
+                 
+                nuevo.sig=ultimo.sig;
+                ultimo.sig=nuevo;
+            
+        }
+             ultimo=nuevo; 
+        
+         
+         
+        
+        return this;
+            
+        }
+           
+           
+    
+    
+    
+    
+    
+    
+    
+    
+    public void mostrarLista(){
+        Nodo aux=ultimo.sig;
+        String cadena="";
+        do{
+            cadena=cadena+"["+aux.nombre+" "+aux.R+" "+aux.tiempo+"]";
+            System.out.println(cadena);
+            aux=aux.sig;
+                    
+        }while(aux!=ultimo.sig);
+        
+    }
+    
 
     /**
      * @return the r
@@ -30,14 +85,16 @@ public class LSLC {
     }
 
     public void inserta(Nodo n, JFrame jf) {
+        r=n;
         if (n == null) {
             //      Mensaje.error(jf, "No se puede insertar en la lista");
         } else {
+            
             if (r == null) {
                 r = n;
                 r.setSig(n);
             } else {
-                if (n.getS().compareTo(r.getS()) >= 0 || n.getS().compareTo(r.getSig().getS()) <= 0) {
+               if (n.getS().compareTo(r.getS()) >= 0 || n.getS().compareTo(r.getSig().getS()) <= 0) {
                     n.setSig(r.getSig());
                     r.setSig(n);
                     if (n.getS().compareTo(r.getS()) >= 0) {
